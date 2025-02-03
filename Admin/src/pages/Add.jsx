@@ -69,7 +69,7 @@ function Add({token}) {
   return (
     <form onSubmit={onSubmitHandler} className='flex flex-col w-full items-start gap-3'>
       <div className='mb-2'>
-        <p className='mb-2'>Upload Image</p>
+        <p className='mb-3 font-medium'>Upload Image</p>
         <div className='flex flex-wrap sm:items-center gap-2'>
           <label htmlFor='image1' className='border h-20 w-16 overflow-hidden'>
             {

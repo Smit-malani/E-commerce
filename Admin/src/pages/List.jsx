@@ -36,8 +36,8 @@ function List({token}) {
   },[])
 
   return (
-    <div className='absolute'>
-      <p className='mb-2'>All Products List</p>
+    <>
+      <p className='mb-3 font-medium'>All Products List</p>
       <div className='flex flex-col gap-2'>
         
 {/* List Table Title */}
@@ -62,7 +62,7 @@ function List({token}) {
             ))
           }
       </div>
-    </div>
+    </>
   )
 }
 

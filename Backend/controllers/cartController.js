@@ -6,7 +6,7 @@ module.exports.getUserCart = async(req, res)=>{
         const userId = req.user
 
         const userData = await userModel.findById(userId)
-        let cartData = await userData.cartdata
+        let cartData = await userData?.cartdata
 
         res.status(200).json({message:'Cart Data', success:true, cartData})
 

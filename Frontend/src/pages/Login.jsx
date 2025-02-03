@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { GoEye } from "react-icons/go"
+import { GoEyeClosed } from "react-icons/go"
 
 
 function Login() {
@@ -12,16 +14,17 @@ function Login() {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const [token, setToken] = useState(localStorage.getItem('token'))
+  const [showPassword, setShowPassword] = useState(false)
 
   async function onSubmitHandler(e) {
     e.preventDefault()
     if (currentState == 'Login') {
       // console.log("Login api")
       try {
-        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/login`,{email, password})
-        if(res.status == 200){
-          localStorage.setItem('token',res.data.token)
-          
+        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/login`, { email, password })
+        if (res.status == 200) {
+          localStorage.setItem('token', res.data.token)
+
           setEmail('')
           setPassword('')
           toast.success("Sign In successfully")
@@ -35,7 +38,7 @@ function Login() {
       try {
         const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/register`, { name, email, password })
         if (res.status == 201) {
-          localStorage.setItem('token',res.data.token)
+          localStorage.setItem('token', res.data.token)
           setName('')
           setEmail('')
           setPassword('')
@@ -48,12 +51,12 @@ function Login() {
     }
   }
 
-  
-  useEffect(()=>{
-    if(token){
+
+  useEffect(() => {
+    if (token) {
       navigate('/')
     }
-  },[token])
+  }, [token])
 
   return (
     <form onSubmit={onSubmitHandler} className='flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-700'>
@@ -63,7 +66,12 @@ function Login() {
       </div>
       {currentState == 'Login' ? '' : <input onChange={(e) => setName(e.target.value)} type='text' value={name} required className='w-full px-3 py-2 border border-gray-700' placeholder='Name' />}
       <input onChange={(e) => setEmail(e.target.value)} type='email' value={email} required className='w-full px-3 py-2 border border-gray-700' placeholder='Email' />
-      <input onChange={(e) => setPassword(e.target.value)} type='password' value={password} required className='w-full px-3 py-2 border border-gray-700' placeholder='Password' />
+      <div className='relative w-full'>
+        <input onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} value={password} required className='w-full px-3 py-2 border border-gray-700' placeholder='Password' />
+        {
+          showPassword ? <GoEye onClick={() => setShowPassword(false)} className='absolute top-1/2 -translate-y-1/2 right-2  opacity-50 cursor-pointer text-black' /> : <GoEyeClosed onClick={() => setShowPassword(true)} className='absolute text-black top-1/2 -translate-y-1/2 right-2  opacity-50 cursor-pointer' />
+        }
+      </div>
       <div className='w-full text-sm mt-[-8px]'>
         {
           currentState == 'Login'

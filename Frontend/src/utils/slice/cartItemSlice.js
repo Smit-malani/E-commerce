@@ -29,17 +29,19 @@ const cartItemSlice = createSlice({
             }
     },
     setCartData(state, action){
-        const dbCartData = action.payload
-        const transformedCart = {}
-
-        Object.entries(dbCartData).forEach(([productId, sizes]) => {
-            Object.entries(sizes).forEach(([size, quantity]) => {
-                const key = `${productId}_${size}`;
-                transformedCart[key] = { productId, size, quantity };
+        if (action.payload) {
+            const dbCartData = action.payload
+            const transformedCart = {}
+            
+            Object.entries(dbCartData).forEach(([productId, sizes]) => {
+                Object.entries(sizes).forEach(([size, quantity]) => {
+                    const key = `${productId}_${size}`;
+                    transformedCart[key] = { productId, size, quantity };
+                });
             });
-        });
-
-        return transformedCart; 
+    
+            return transformedCart; 
+        }
     }
     }
 })

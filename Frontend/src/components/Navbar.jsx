@@ -15,7 +15,7 @@ function Navbar() {
   const dispatch = useDispatch()
   const location = useLocation()
   const navigate = useNavigate()
-  const [token, setToken] = useState(localStorage.getItem('token'))
+  const [token, setToken] = useState('')  
 
   const cartItem = useSelector((slice) => slice.cartItem)
   const cartCount = Object.values(cartItem).reduce((total, item) => total + item.quantity, 0);
@@ -24,7 +24,12 @@ function Navbar() {
   function logout() {
     localStorage.removeItem('token')
     navigate('/login')
+    setVisible(false)
   }
+
+  useEffect(()=>{
+    setToken(localStorage.getItem('token'))
+  },[localStorage.getItem('token')])
 
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
@@ -90,6 +95,8 @@ function Navbar() {
           <NavLink onClick={() => setVisible(false)} to={'/collection'} className='py-2 pl-6 border-b-[1px]'>COLLECTION</NavLink>
           <NavLink onClick={() => setVisible(false)} to={'/about'} className='py-2 pl-6 border-b-[1px]'>ABOUT</NavLink>
           <NavLink onClick={() => setVisible(false)} to={'/contact'} className='py-2 pl-6 border-b-[1px]'>CONTACT</NavLink>
+          <NavLink onClick={() => setVisible(false)} to={'/orders'} className='py-2 pl-6 border-b-[1px]'>ORDERS</NavLink>
+          <button className='py-2 pl-6 border-b-[1px] text-left' onClick={logout} >LOGOUT</button>
         </div>
       </div>
     </div>

@@ -38,7 +38,9 @@ function App() {
   async function fetchCartData(){
     try {
       const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/get`, {headers: {Authorization: `Bearer ${token}`}})
-      dispatch1(setCartData(res.data.cartData))
+      if(res.status == 200){
+        dispatch1(setCartData(res.data.cartData))
+      }      
     } catch (err) {
       toast.error("internal server error")
     }
@@ -49,7 +51,9 @@ function App() {
   }, [])
 
   useEffect(()=>{
-    fetchCartData()
+    if(token){
+      fetchCartData()
+    }
   },[dispatch1, token])
 
   return (

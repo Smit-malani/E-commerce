@@ -23,9 +23,10 @@ function Order({ token }) {
   async function updateStatus(orderId, status) {
     try {
 
-      const res = await axios.patch(`${import.meta.env.VITE_BASE_URL}/status`, { orderId, status}, { headers: { Authorization: `Bearer ${token}` } })
+      const res = await axios.patch(`${import.meta.env.VITE_BASE_URL}/status`, { orderId, status }, { headers: { Authorization: `Bearer ${token}` } })
       if (res.status == 200) {
         fetchOrders()
+        toast.success(res?.data?.message)
       }
     } catch (err) {
       toast.error(err.response.data.message)
@@ -39,7 +40,7 @@ function Order({ token }) {
 
   return (
     <div>
-      <h3>Order page</h3>
+      <h3 className='mb-3 font-medium'>Order page</h3>
       <div>
         {
           orders.length > 0 ? (

@@ -53,7 +53,7 @@ module.exports.updateStatus = async(req, res)=>{
     try {
         const {orderId, status} = req.body
         if(status == "Delivered"){
-            await orderModel.findByIdAndUpdate(orderId,{paymentStatus: true})
+            await orderModel.findByIdAndUpdate(orderId,{paymentStatus: true, orderStatus: status})
         }else{
             await orderModel.findByIdAndUpdate(orderId, {orderStatus: status, paymentStatus: false})
         }
