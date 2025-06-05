@@ -12,5 +12,7 @@ router.post('/addproduct', upload.fields([{name: 'image1', maxCount:1}, {name: '
 
 router.delete('/remove/:productId', adminAuth.verifyAdmin, productController.removeProduct)
 
+router.patch('/update/:productId',adminAuth.verifyAdmin,productController.updateProduct)
+
 
 module.exports = router

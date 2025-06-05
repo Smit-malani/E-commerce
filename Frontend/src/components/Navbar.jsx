@@ -16,18 +16,19 @@ function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const [token, setToken] = useState('')  
-
+  const [name, setName] = useState('')
   const cartItem = useSelector((slice) => slice.cartItem)
   const cartCount = Object.values(cartItem).reduce((total, item) => total + item.quantity, 0);
 
-
   function logout() {
     localStorage.removeItem('token')
+    localStorage.removeItem('name')
     navigate('/login')
     setVisible(false)
   }
 
   useEffect(()=>{
+    setName(localStorage.getItem('name'))
     setToken(localStorage.getItem('token'))
   },[localStorage.getItem('token')])
 
@@ -60,14 +61,20 @@ function Navbar() {
         }
         <div className='group relative'>
           <Link to={'/login'}>
-            <FaRegUser className='cursor-pointer' />
+          {
+            token ?  <img
+            src={`https://api.dicebear.com/9.x/initials/svg?seed=${name}`} 
+            alt="User Profile"
+            className="w-7 h-7 rounded-full object-cover"
+          />: <FaRegUser className='cursor-pointer' />
+          }
           </Link>
           {
             token
             && (
               <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4'>
                 <div className='flex flex-col gap-2 w-36 py-3 px-5  bg-white border text-gray-700'>
-                  <p className=' cursor-pointer hover:text-black hover:underline text-sm'>My Profile</p>
+                  <p onClick={()=> navigate('/user/profile')} className=' cursor-pointer hover:text-black hover:underline text-sm'>My Profile</p>
                   <p onClick={()=>navigate('/orders')} className=' cursor-pointer hover:text-black hover:underline text-sm'>Orders</p>
                   <p onClick={logout} className=' cursor-pointer hover:text-black hover:underline text-sm'>Logout</p>
                 </div>

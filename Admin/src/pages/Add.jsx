@@ -15,10 +15,16 @@ function Add({token}) {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
+  const [quantity, setQuantity] = useState('')
+
   const [category, setCategory] = useState('Men')
   const [subCategory, setSubCategory] = useState('Topwear')
   const [bestseller, setBeseller] = useState(true)
   const [sizes, setSizes] = useState([])
+
+  const [offerEnabled, setOfferEnabled] = useState(false)
+  const [discount, setDiscount] = useState('')
+  const [discountedPrice, setDiscountedPrice] = useState('')
 
   const [loading, setLoading] = useState(false)
 
@@ -35,6 +41,13 @@ function Add({token}) {
       formData.append('subCategory', subCategory)
       formData.append('bestseller', bestseller)
       formData.append('sizes', JSON.stringify(sizes))
+      formData.append('quantity',quantity)
+
+      if(offerEnabled){
+        formData.append('offerEnabled', offerEnabled)   
+        formData.append('discount', discount)
+        formData.append('discountedPrice', discountedPrice) 
+    }
 
       // for image's
       image1 && formData.append('image1',image1)
@@ -57,6 +70,10 @@ function Add({token}) {
         setSubCategory("Topwear");
         setPrice("");
         setSizes([]);
+        setOfferEnabled(true);
+        setDiscount('');
+        setDiscountedPrice('');
+        setQuantity('')
       }
       
     } catch (err) {
@@ -142,6 +159,11 @@ function Add({token}) {
           <p className='mb-2 text-sm'>Product Price</p>
           <input onChange={(e)=> setPrice(e.target.value)} value={price} type="number" placeholder='199' className='text-sm px-3 py-2 w-full sm:w-[120px]' />
         </div>
+
+        <div>
+          <p className='mb-2 text-sm'>Product Quantity</p>
+          <input onChange={(e)=> setQuantity(e.target.value)} value={quantity} type="number" placeholder='10 quantity' className='text-sm px-3 py-2 w-full sm:w-[120px]' />
+        </div>
       </div>
 
       <div>
@@ -165,6 +187,46 @@ function Add({token}) {
           </div>
 
         </div>
+      </div>
+
+      <div className='w-full'>
+        <div className='felx items-center gap-2'>
+        <input
+            type="checkbox"
+            id="offerEnabled"
+            checked={offerEnabled}
+            onChange={() => setOfferEnabled((prev) => !prev)}
+          />
+          <label htmlFor="offerEnabled" className='text-sm cursor-pointer ml-1'>Enable Offer</label>
+        </div>
+        {offerEnabled && (
+          <div className='mt-3'>
+            <p className='text-sm mb-2'>Discount Percentage</p>
+            <input
+              type="number"
+              required
+              value={discount}
+              onChange={(e) => {
+                const value = e.target.value;
+                setDiscount(value);
+
+                // Calculate discounted price
+                if (price) {
+                  const calculatedPrice = parseFloat(price) - (parseFloat(price) * parseFloat(value)) / 100;
+                  setDiscountedPrice(calculatedPrice.toFixed(2)); // Round to 2 decimal places
+                }
+              }}
+              placeholder="Enter discount percentage"
+              className='w-full max-w-[200px] px-3 py-2 placeholder:text-sm border border-gray-700'
+            />
+
+            {discountedPrice && (
+              <p className='text-sm mt-2'>
+                Discounted Price: <span className='font-medium'>₹{discountedPrice}</span>
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
       <div className='flex gap-2 mt-2'>

@@ -29,14 +29,28 @@ function PlaceOrder() {
   })
 
   function onChangeHandler(e) {
+
+    const nameRegex = /^[A-Za-z]+$/
+    
+
     const name = e.target.name
     const value = e.target.value
 
+    if ((name === "firstname" || name === "lastname") && !nameRegex.test(value) && value !== "") {
+      toast.error("Only alphabets are allowed for names!");
+      return;
+    }
     setFormData(data => ({ ...data, [name]: value }))
   }
 
   async function submitHandler(e) {
     e.preventDefault()
+    const phoneRegex = /^\d{10}$/
+  if (!phoneRegex.test(formData.phone)) {
+    toast.error("Phone number must be exactly 10 digits!");
+    return;
+  }
+
     try {
       let orderItem = []
       for(const key in cartItem){                

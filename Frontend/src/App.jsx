@@ -6,6 +6,7 @@ import Cart from "./pages/Cart"
 import Contact from "./pages/Contact"
 import Login from "./pages/Login"
 import Orders from "./pages/Orders"
+import UserProfile from "./pages/userProfile"
 import PlaceOrder from "./pages/PlaceOrder"
 import Product from "./pages/Product"
 import About from "./pages/About"
@@ -62,7 +63,7 @@ function App() {
       <Search/>
       <Routes>
         <Route path="/" element={<Home allProduct={allProduct} />} />
-        <Route path="/collection" element={<Collection allProduct={allProduct} />} />
+        <Route path="/collection" element={<Collection/>} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/product/:productId" element={<Product />} />
@@ -70,6 +71,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/user/profile" element={<UserProfile/>}/>
       </Routes>
       <Footer />
     </div>

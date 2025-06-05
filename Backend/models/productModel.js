@@ -13,6 +13,10 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    quantity:{
+        type: Number,
+        required: true
+    },
     images:{
         type: Array,
         required: true
@@ -31,8 +35,26 @@ const productSchema = new mongoose.Schema({
     },
     bestSeller:{
         type: Boolean
-    }
-})
+    },
+    offerEnabled:{
+        type: Boolean,
+        default: true
+    },
+    discount:{
+        type: Number,
+        default: null
+    },
+    discountedPrice:{
+        type: Number,
+        default: null
+    },
+    review:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'review'
+        }
+    ]
+},{timestamps:true})
 
 const productModel = mongoose.model('product', productSchema)
 

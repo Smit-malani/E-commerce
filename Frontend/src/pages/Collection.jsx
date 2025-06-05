@@ -74,12 +74,20 @@ function Collection() {
 
     switch(sortType){
       case 'low-high':
-        setFilterProduct(fpCopy.sort((a, b)=> a.price - b.price))
+        setFilterProduct(fpCopy.sort((a, b)=> a.discountedPrice - b.discountedPrice))
         break;
 
       case 'high-low':
-        setFilterProduct(fpCopy.sort((a,b)=> b.price - a.price))
+        setFilterProduct(fpCopy.sort((a,b)=> b.discountedPrice - a.discountedPrice))
         break;
+
+      case 'high-low-offer':
+        setFilterProduct(fpCopy.sort((a,b)=> b.discount - a.discount))
+        break;
+
+        case 'low-high-offer':
+          setFilterProduct(fpCopy.sort((a,b)=> a.discount - b.discount))
+          break;
 
       default:
         applyFilter()
@@ -149,15 +157,21 @@ function Collection() {
             <option value={"relavent"}>Sort By: Relavent</option>
             <option value={"low-high"}>Sort By: Low to High</option>
             <option value={"high-low"}>Sort By: High to Low</option>
+            <option value={"high-low-offer"}>Sort By: High to Low Offer</option>
+            <option value={"low-high-offer"}>Sort By: Low to High Offer</option>
           </select>
         </div>
 
         {/* Map Product */}
         <div className='grid grid-cols-2 mt-5 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6 sm:mt-0'>
           {
-            filterProducts?.map((item, index) => (
-              <ProductItem key={index} productId={item._id} image={item.images} name={item.name} price={item.price} />
-            ))
+            filterProducts && filterProducts.length > 0 ? (
+              filterProducts?.map((item, index) => (
+                <ProductItem key={index} productId={item._id} image={item.images} name={item.name} price={item.price} offerEnabled={item?.offerEnabled} quantity={item.quantity} discount={item?.discount} discountedPrice={item?.discountedPrice}/>
+              ))
+            ):(
+              <p className="text-center col-span-full text-gray-500 text-3xl mt-16 font-medium">No product found.</p>
+            )
           }
         </div>
 

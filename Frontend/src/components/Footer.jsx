@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 function Footer() {
     return (
@@ -13,10 +14,18 @@ function Footer() {
                 <div>
                     <p className='text-xl font-medium mb-5'>COMPANY</p>
                     <ul className='flex flex-col gap-1 text-gray-700'>
-                        <li>Home</li>
-                        <li>About us</li>
-                        <li>Delivery</li>
-                        <li>Privacy policy</li>
+                        <NavLink to='/'>
+                            <p>Home</p>
+                        </NavLink>
+                        <NavLink to='/collection'>
+                            <p>Collection</p>
+                        </NavLink>
+                        <NavLink to='/about'>
+                            <p>About</p>
+                        </NavLink>
+                        <NavLink to='/contact'>
+                            <p>Contact</p>
+                        </NavLink>
                     </ul>
                 </div>
 
@@ -30,9 +39,9 @@ function Footer() {
 
             </div>
             <div className=''>
-                    <hr/>
-                    <p className='py-5 text-sm text-gray-700 text-center'>Copyright 2025@ Sphere.com - All Right Reserved.</p>
-                </div>
+                <hr />
+                <p className='py-5 text-sm text-gray-700 text-center'>Copyright 2025@ Sphere.com - All Right Reserved.</p>
+            </div>
         </div>
     )
 }

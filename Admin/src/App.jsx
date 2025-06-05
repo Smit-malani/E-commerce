@@ -7,6 +7,7 @@ import Orders from "../src/pages/Order"
 import Add from "../src/pages/Add"
 import List from "../src/pages/List"
 import Sidebar from "../src/components/Sidebar"
+import UpdateProduct from "./pages/UpdateProduct"
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
                   <Route path="/add" element={<Add  token={token}/>} />
                   <Route path="/" element={<List token={token}/>} />
                   <Route path="/order" element={<Orders token={token} />} />
+                  <Route path="/updateproduct/:id" element={<UpdateProduct token={token} />} />
                 </Routes>
               </div>
             </div>

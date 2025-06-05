@@ -7,7 +7,7 @@ function Navbar({ setToken }) {
         <h1 className='uppercase font-bold'>Shop <span className='text-[#C586A5]'>Sphere</span></h1>
         <p className=' uppercase font-light text-black text-xs'>Admin Panel</p>
       </div>
-      <button onClick={() => setToken('')} className='bg-black text-white px-5 py-2 sm:px-7 sm:py-2 text-xs cursor-pointer font-light hover:bg-gray-800'>Log Out</button>
+      <button onClick={() => setToken('')} className='bg-gray-600 text-white px-5 py-2 sm:px-7 sm:py-2 text-xs cursor-pointer font-light hover:bg-gray-800'>Log Out</button>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 const orderModel = require('../models/orderModel')
+const productModel = require('../models/productModel')
 const userModel = require('../models/userModel')
 
 
@@ -50,9 +51,21 @@ module.exports.allOrder = async(req, res)=>{
 
 //update order status from admin panel
 module.exports.updateStatus = async(req, res)=>{
-    try {
+    try {  
         const {orderId, status} = req.body
+
+        const order = await orderModel.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ success: false, message: 'Order not found' });
+        }
+
         if(status == "Delivered"){
+            for (let item of order.items) {
+                await productModel.findByIdAndUpdate(
+                    item._id, 
+                    { $inc: { quantity: -item.quantity } }
+                )
+            }
             await orderModel.findByIdAndUpdate(orderId,{paymentStatus: true, orderStatus: status})
         }else{
             await orderModel.findByIdAndUpdate(orderId, {orderStatus: status, paymentStatus: false})

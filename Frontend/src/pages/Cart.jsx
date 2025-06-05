@@ -73,12 +73,12 @@ function Cart() {
                 <div className='flex items-start gap-6'>
                   <img className='w-16 sm:w-20' src={productData?.images[0].secure_url} alt="" />
                   <div>
-                    <Link to={`/product/${productData?._id}`} className='text-xs sm:text-lg font-medium'>{productData.name}</Link>
+                    <Link to={`/product/${productData?._id}`} className='text-xs sm:text-lg font-medium'>{productData?.name}</Link>
                     <div className='flex items-center gap-5 mt-2'>
-                      <p>₹ {productData.price}</p>
-                      <p className='px-2 sm:px-3 sm:py-1 border bg-white text-sm'>{item.size}</p>
+                      <p>₹ {productData?.discountedPrice}</p>
+                      <p className='px-2 sm:px-3 sm:py-1 border bg-white text-sm'>{item?.size}</p>
                       <p className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1 bg-white text-[10px] sm:text-sm'>
-                        QTY: <span>{item.quantity}</span>
+                        QTY: <span>{item?.quantity}</span>
                       </p>
                     </div>
                   </div>

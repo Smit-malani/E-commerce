@@ -29,7 +29,8 @@ function Order({ token }) {
         toast.success(res?.data?.message)
       }
     } catch (err) {
-      toast.error(err.response.data.message)
+      console.log(err)
+      toast.error('Internal server error')
     }
   }
 
@@ -49,14 +50,18 @@ function Order({ token }) {
                 <PiPackageLight className='text-4xl' />
                 <div>
                   <div className=''>
+                  <p className='mb-0.5 font-bold'>Ordered items</p>
                     {
                       order.items.map((item, index) => {
-                        return <p className='py-0.5' key={index}> {item.name} X {item.quantity} </p>
+                        return (
+                          <p className='py-0.5 text-sm' key={index}> {item.name} <span className='font-bold mx-2'>X</span> {item.size} <span className='font-bold mx-2'>X</span>{item.quantity} </p>
+                      )
                       })
                     }
                   </div>
-                  <p className='mt-3 mb-2 font-medium'>{order.address.firstname} {order.address.lastname}</p>
-                  <div>
+                  <p className='mt-3 mb-0.5 font-bold'>Order address details</p>
+                  <p>{order.address.firstname} {order.address.lastname}</p>
+                  <div className='text-sm'>
                     <p>{order.address.street + ','}</p>
                     <p>{order.address.city + ', ' + order.address.state + ', ' + order.address.country + ', ' + order.address.zipcode}</p>
                   </div>
@@ -64,11 +69,17 @@ function Order({ token }) {
                 </div>
                 <div>
                   <p className='text-sm sm:text-[15px]'>Items: {order.items.length}</p>
-                  <p>Payment: {order.paymentStatus ? 'Done' : 'Pending'}</p>
-                  <p>Date: {new Date(order.date).toLocaleDateString()}</p>
+                  {
+                    order?.paymentStatus ? (
+                      <p>Payment: <span className='text-green-500'>Done</span></p>
+                      ):(
+                        <p>Payment: <span className='text-red-500'>Pending</span></p>
+                        )
+                  }
+                  <p className='text-sm text-gray-500'>Date: {new Date(order.date).toLocaleDateString()}</p>
                 </div>
-                <p className='text-sm sm:text-[15px]'>₹ {order.amount}</p>
-                <select onChange={(e) => updateStatus(order._id, e.target.value)} value={order.orderStatus} className='p-2 font-semibold'>
+                <p className='text-sm sm:text-[15px] font-medium underline'>₹ {order.amount}</p>
+                <select onChange={(e) => updateStatus(order._id, e.target.value)} value={order.orderStatus} className='p-2 font-medium'>
                   <option value="Order Placed">Order Placed</option>
                   <option value="Packing">Packing</option>
                   <option value="Shipping">Shipping</option>

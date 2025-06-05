@@ -17,7 +17,7 @@ function CartTotal() {
             for(const item in cartItem[items]){
                 try {
                     if(cartItem[items][item] > 0){
-                        totalAmount1 += itemInfo.price * cartItem[items][item]
+                        totalAmount1 += itemInfo.discountedPrice * cartItem[items][item]
                     }
                 } catch (err) {
                     //pass
@@ -41,7 +41,7 @@ function CartTotal() {
             <div className='flex flex-col gap-2 mt-2 text-sm'>
                 <div className='flex justify-between'>
                     <p>Subtotal</p>
-                    <p>₹ {totalAmount}.00</p>
+                    <p>₹ {totalAmount}</p>
                 </div>
                 <hr/>
                 <div className='flex justify-between'>
@@ -51,7 +51,7 @@ function CartTotal() {
                 <hr/>
                 <div className='flex justify-between'>
                     <b>Total</b>
-                    <b>₹ {totalAmount == 0 ? 0 : totalAmount + 50}.00</b>
+                    <b>₹ {totalAmount == 0 ? 0 : totalAmount + 50}</b>
                 </div>
             </div>
         </div>
