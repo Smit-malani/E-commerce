@@ -56,6 +56,7 @@ function Collection() {
       if(showSearch == false){
         productCopy = [...product]
       }
+      
     }
 
     if(category.length > 0){
